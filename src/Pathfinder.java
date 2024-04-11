@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Pathfinder {
 
@@ -49,6 +51,11 @@ public class Pathfinder {
         }
 
         return neighbors;
+    }
+
+    private int getHeuristic(Node start, Node end) {
+        int heuristic = Math.abs(start.getX() - end.getX()) + Math.abs(start.getY() - end.getY());
+        return heuristic;
     }
 
     public ArrayList<Node> bfs() {
@@ -118,6 +125,58 @@ public class Pathfinder {
             dfsRecursive(this.grid[currentY][currentX - 1], currentNode);
         } catch (ArrayIndexOutOfBoundsException e) {
         }
+    }
+
+    public ArrayList<Node> astar() {
+        this.path = new ArrayList();
+
+        for (int i = 0; i < this.grid.length; i++) {
+            for (int j = 0; j < this.grid[i].length; j++) {
+                this.grid[i][j].setG(Integer.MAX_VALUE);
+                this.grid[i][j].setF(Integer.MAX_VALUE);
+            }
+        }
+        this.startNode.setG(0);
+        this.startNode.setH(getHeuristic(this.startNode, this.endNode));
+        this.startNode.setF(this.startNode.getG() + this.startNode.getH());
+
+        ArrayList<Node> openList = new ArrayList<>();
+        ArrayList<Node> closedList = new ArrayList<>();
+
+        openList.add(this.startNode);
+        while (!openList.isEmpty()) {
+            this.currentNode = openList.get(0);
+            for (int i = 0; i < openList.size(); i++) {
+                if (openList.get(i).getF() < this.currentNode.getF()) {
+                    this.currentNode = openList.get(i);
+                }
+            }
+            openList.remove(this.currentNode);
+
+            if (Node.isEqual(this.currentNode, this.endNode)) {
+                System.out.println("A*: End found; breaking");
+                break;
+            }
+
+            for (Node neighbor : getNeighbors(this.currentNode)) {
+                if (neighbor != null && !closedList.contains(neighbor) && !neighbor.isBarrier()) {
+                    int tempG = this.currentNode.getG() + 1;
+                    if (tempG < neighbor.getG()) {
+                        neighbor.setParent(this.currentNode);
+                        neighbor.setG(tempG);
+                        neighbor.setF(tempG + getHeuristic(neighbor, this.endNode));
+                        if (!openList.contains(neighbor)) {
+                            openList.add(neighbor);
+                        }
+                    }
+                    this.path.add(this.grid[neighbor.getY()][neighbor.getX()]);
+                }
+            }
+            if (this.currentNode != this.startNode) {
+                closedList.add(this.currentNode);
+            }
+        }
+        return this.path;
     }
 
 }
