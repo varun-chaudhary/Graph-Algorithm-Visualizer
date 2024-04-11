@@ -36,7 +36,6 @@ public class Board extends MouseAdapter implements ActionListener, ChangeListene
 
     // Menu title/author labels
     private JLabel labelMenuTitle = new JLabel("Pathfinding Visualizer");
-    private JLabel labelMenuAuthor = new JLabel("");
 
     // Drawing tools
     private JLabel labelDrawingTools = new JLabel("Drawing Tools:");
@@ -466,11 +465,6 @@ public class Board extends MouseAdapter implements ActionListener, ChangeListene
         this.labelMenuTitle.setFont(Main.FONT_TITLE);
         this.labelMenuTitle.setBounds(Main.MENU_PADDING, Main.MENU_PADDING + 10,
                 Main.MENU_WIDTH - (Main.MENU_PADDING * 2), 30);
-
-        this.boardPanel.add(labelMenuAuthor);
-        this.labelMenuAuthor.setFont(Main.FONT_SUBHEADER);
-        this.labelMenuAuthor.setBounds(Main.MENU_PADDING, Main.MENU_PADDING + 35,
-                Main.MENU_WIDTH - (Main.MENU_PADDING * 2), 25);
 
         // DRAW TOOL RADIO BUTTONS
         ButtonGroup drawTools = new ButtonGroup(); // Only allows one draw tool radio button to be pressed at a time

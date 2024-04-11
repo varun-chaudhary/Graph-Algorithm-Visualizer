@@ -179,4 +179,10 @@ public class Pathfinder {
         return this.path;
     }
 
+    public ArrayList<Node> dijkstra() {
+        this.path = new ArrayList();
+
+        return this.path;
+    }
+
 }

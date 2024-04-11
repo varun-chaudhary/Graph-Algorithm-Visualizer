@@ -4,6 +4,7 @@ import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 
 public class Main {
 
@@ -47,6 +48,45 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        try {
+
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
+            UIManager.put("Button.font", FONT_NORMAL);
+            UIManager.put("ToggleButton.font", FONT_NORMAL);
+            UIManager.put("RadioButton.font", FONT_NORMAL);
+            UIManager.put("CheckBox.font", FONT_NORMAL);
+            UIManager.put("ColorChooser.font", FONT_NORMAL);
+            UIManager.put("ComboBox.font", FONT_NORMAL);
+            UIManager.put("Label.font", FONT_NORMAL);
+            UIManager.put("List.font", FONT_NORMAL);
+            UIManager.put("MenuBar.font", FONT_NORMAL);
+            UIManager.put("MenuItem.font", FONT_NORMAL);
+            UIManager.put("RadioButtonMenuItem.font", FONT_NORMAL);
+            UIManager.put("CheckBoxMenuItem.font", FONT_NORMAL);
+            UIManager.put("Menu.font", FONT_NORMAL);
+            UIManager.put("PopupMenu.font", FONT_NORMAL);
+            UIManager.put("OptionPane.font", FONT_NORMAL);
+            UIManager.put("Panel.font", FONT_NORMAL);
+            UIManager.put("ProgressBar.font", FONT_NORMAL);
+            UIManager.put("ScrollPane.font", FONT_NORMAL);
+            UIManager.put("Viewport.font", FONT_NORMAL);
+            UIManager.put("TabbedPane.font", FONT_NORMAL);
+            UIManager.put("Table.font", FONT_NORMAL);
+            UIManager.put("TableHeader.font", FONT_NORMAL);
+            UIManager.put("TextField.font", FONT_NORMAL);
+            UIManager.put("PasswordField.font", FONT_NORMAL);
+            UIManager.put("TextArea.font", FONT_NORMAL);
+            UIManager.put("TextPane.font", FONT_NORMAL);
+            UIManager.put("EditorPane.font", FONT_NORMAL);
+            UIManager.put("TitledBorder.font", FONT_NORMAL);
+            UIManager.put("ToolBar.font", FONT_NORMAL);
+            UIManager.put("ToolTip.font", FONT_NORMAL);
+            UIManager.put("Tree.font", FONT_NORMAL);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         frame = new JFrame("Pathfinding Visualizer");
         setPanel(new Board().getPanel());
