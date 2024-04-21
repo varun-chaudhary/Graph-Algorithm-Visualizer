@@ -35,7 +35,7 @@ public class Board extends MouseAdapter implements ActionListener, ChangeListene
     private Node startNode, endNode;
 
     // Menu title/author labels
-    private JLabel labelMenuTitle = new JLabel("Pathfinding Visualizer");
+    private JLabel labelMenuTitle = new JLabel("Graph Algo Visualizer");
 
     // Drawing tools
     private JLabel labelDrawingTools = new JLabel("Drawing Tools:");
@@ -47,19 +47,19 @@ public class Board extends MouseAdapter implements ActionListener, ChangeListene
     private JButton butClearGrid = new JButton("Clear grid");
     private boolean disableDraw = false;
 
-    // Pathfinding algorithm types
-    private JLabel labelPathfindingAlgos = new JLabel("Pathfinding Algorithms:");
-    private final String COMBOBOX_ASTAR = "A* Search Algorithm", // ComboBox strings used for indexing pathfinding
+    // algorithm types
+    private JLabel labelPathfindingAlgos = new JLabel("Algorithms:");
+    private final String COMBOBOX_ASTAR = "A* Search Algorithm", // ComboBox strings used for indexing
                                                                  // algorithms
             COMBOBOX_DIJKSTRA = "Dijkstra's Algorithm",
             COMBOBOX_BFS = "Breadth-First Search",
             COMBOBOX_DFS = "Depth-First Search";
-    private JComboBox pathfindingAlgosComboBox = new JComboBox(new String[] { // Dropdown menu of pathfinding algorithms
+    private JComboBox pathfindingAlgosComboBox = new JComboBox(new String[] { // Dropdown menu of algorithms
                                                                               // (TODO: Add Dijkstra)
             COMBOBOX_ASTAR, /* COMBOBOX_DIJKSTRA, */ COMBOBOX_BFS, COMBOBOX_DFS
     });
 
-    private JButton butStartSearch = new JButton("START PATHFINDING");
+    private JButton butStartSearch = new JButton("START");
     private boolean disableAlgoSelect = false;
     private boolean pathfindingOngoing = false;
     private boolean pathfindingPaused = false;
@@ -77,7 +77,7 @@ public class Board extends MouseAdapter implements ActionListener, ChangeListene
     // Path node refresh slider
     private Thread threadPathNodeRefresh;
     private int refreshInterval = 15; // Used for connect path thread to adjust refresh interval for adding
-                                      // pathfinding nodes
+                                      // nodes
     private JLabel labelPathRefreshInterval = new JLabel("Visualizer Speed:");
     private JSlider sliderPathRefreshInterval = new JSlider(5, 35, refreshInterval);
 
@@ -166,7 +166,7 @@ public class Board extends MouseAdapter implements ActionListener, ChangeListene
         setEndNode(null);
     }
 
-    public void resetCurrentGrid() { // Clear pathfinding nodes (exclude start, end, & barrier nodes)
+    public void resetCurrentGrid() { // Clear nodes (exclude start, end, & barrier nodes)
         if (this.grid != null) {
             for (int y = 0; y < this.grid.length; y++) { // Load Node grid/array
                 for (int x = 0; x < this.grid[y].length; x++) {
@@ -191,7 +191,7 @@ public class Board extends MouseAdapter implements ActionListener, ChangeListene
         disableDrawing(false); // Enable drawing
         disableAlgorithmSelect(false); // Enable algorithm selection
 
-        resetPathfinding(); // Reset variables after pathfinding complete
+        resetPathfinding(); // Reset variables after complete
     }
 
     public void connectPath(ArrayList<Node> path) { // Add path to grid
@@ -204,7 +204,7 @@ public class Board extends MouseAdapter implements ActionListener, ChangeListene
                         e.printStackTrace();
                     }
                     pathNode.setSearched(false);
-                    while (this.pathfindingPaused == true) { // Loop to pause pathfinding TODO: remove sout (empty while
+                    while (this.pathfindingPaused == true) { // Loop to pause TODO: remove sout (empty while
                                                              // loop doesn't run)
                         System.out.println("Pausing");
                     }
@@ -234,7 +234,7 @@ public class Board extends MouseAdapter implements ActionListener, ChangeListene
                             e.printStackTrace();
                         }
                         pathNode.setSearched(false);
-                        while (this.pathfindingPaused == true) { // Loop to pause pathfinding TODO: remove sout (empty
+                        while (this.pathfindingPaused == true) { // Loop to pause TODO: remove sout (empty
                                                                  // while loop doesn't run)
                             System.out.println("Pausing");
                         }
@@ -251,7 +251,7 @@ public class Board extends MouseAdapter implements ActionListener, ChangeListene
                             e.printStackTrace();
                         }
                         pathNode.setSearched(true);
-                        while (this.pathfindingPaused == true) { // Loop to pause pathfinding TODO: remove sout since
+                        while (this.pathfindingPaused == true) { // Loop to pause TODO: remove sout since
                                                                  // empty while loop doesn't run
                             System.out.println("Pausing");
                         }
@@ -268,54 +268,54 @@ public class Board extends MouseAdapter implements ActionListener, ChangeListene
         if (evt.getSource() == this.timerBoard) { // 60FPS Timer
             this.boardPanel.repaint();
         } else if (evt.getSource() == this.butResetGrid) {
-            resetCurrentGrid(); // Clear pathfinding nodes
+            resetCurrentGrid(); // Clear nodes
             disableDrawing(false); // Enable drawing
             disableAlgorithmSelect(false); // Enable algorithm selection
 
-            resetPathfinding(); // Reset variables after pathfinding complete
+            resetPathfinding(); // Reset variables after complete
         } else if (evt.getSource() == this.butClearGrid) {
             if (JOptionPane.showConfirmDialog(null, "Are you sure you want to clear the grid?", "Warning",
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) { // Confirm clear grid dialog. Yes option.
                 clearGrid();
             }
-        } else if (evt.getSource() == this.butStartSearch) { // Start pathfinding
-            disableDrawing(true); // Prevent drawing during pathfinding
-            disableAlgorithmSelect(true); // Prevent changing algorithm during pathfinding
+        } else if (evt.getSource() == this.butStartSearch) { // Start
+            disableDrawing(true); // Prevent drawing during
+            disableAlgorithmSelect(true); // Prevent changing algorithm during
 
-            if (this.pathfindingOngoing == true) { // Pathfinding is ongoing
-                if (this.pathfindingPaused == true) { // Pathfinding is currently paused and will be resumed
-                    this.butStartSearch.setText("Pause pathfinding");
+            if (this.pathfindingOngoing == true) { // is ongoing
+                if (this.pathfindingPaused == true) { // is currently paused and will be resumed
+                    this.butStartSearch.setText("Pause ");
                     this.pathfindingPaused = false;
-                } else { // Pathfinding is currently ongoing and will be paused
-                    this.butStartSearch.setText("Resume pathfinding");
+                } else { // is currently ongoing and will be paused
+                    this.butStartSearch.setText("Resume ");
                     this.pathfindingPaused = true;
                 }
             } else { // Not searching yet
                 resetCurrentGrid();
                 this.pathfindingOngoing = true;
                 this.pathfindingPaused = false;
-                this.butStartSearch.setText("Pause pathfinding");
+                this.butStartSearch.setText("Pause ");
 
-                Pathfinder pathfinder = new Pathfinder(this.grid, this.startNode, this.endNode);
+                Algorithm Algorithm = new Algorithm(this.grid, this.startNode, this.endNode);
                 ArrayList<Node> searchPath = new ArrayList<>(), shortestPath;
 
-                switch ((String) this.pathfindingAlgosComboBox.getSelectedItem()) { // Get selected pathfinding
+                switch ((String) this.pathfindingAlgosComboBox.getSelectedItem()) { // Get selected
                                                                                     // algorithm
                     case COMBOBOX_ASTAR: // A* search algorithm
-                        searchPath = pathfinder.astar();
+                        searchPath = Algorithm.astar();
                         break;
                     case COMBOBOX_DIJKSTRA: // Dijkstra's algorithm
-                        searchPath = pathfinder.dijkstra();
+                        searchPath = Algorithm.dijkstra();
                         break;
                     case COMBOBOX_BFS: // Breadth-first search
-                        searchPath = pathfinder.bfs();
+                        searchPath = Algorithm.bfs();
                         break;
                     case COMBOBOX_DFS: // Depth-first search
-                        searchPath = pathfinder.dfs();
+                        searchPath = Algorithm.dfs();
                         break;
                 }
 
-                shortestPath = pathfinder.getShortestPath();
+                shortestPath = Algorithm.getShortestPath();
                 if (shortestPath != null) { // Reached end node
                     // connectMultiplePaths(new ArrayList<>(Arrays.asList(searchPath,
                     // shortestPath)));
@@ -332,7 +332,7 @@ public class Board extends MouseAdapter implements ActionListener, ChangeListene
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        resetPathfinding(); // Reset variables after pathfinding complete
+                        resetPathfinding(); // Reset variables after complete
                         disableAlgorithmSelect(false); // Enable algorithm select radio buttons
                         this.boardPanel.searchComplete(true); // Enable colour fade animation of empty nodes
                     }
@@ -353,7 +353,7 @@ public class Board extends MouseAdapter implements ActionListener, ChangeListene
                                                                                 // option.
                     clearGrid();
 
-                    switch ((String) this.mazeGeneratorAlgosComboBox.getSelectedItem()) { // Get selected pathfinding
+                    switch ((String) this.mazeGeneratorAlgosComboBox.getSelectedItem()) { // Get selected
                                                                                           // algorithm
                         case COMBOBOX_NONE: // Empty
                             break;
@@ -367,10 +367,10 @@ public class Board extends MouseAdapter implements ActionListener, ChangeListene
         }
     }
 
-    public void resetPathfinding() { // Reset pathfinding variables
+    public void resetPathfinding() { // Reset variables
         this.pathfindingOngoing = false;
         this.pathfindingPaused = false;
-        this.butStartSearch.setText("Start pathfinding");
+        this.butStartSearch.setText("Start ");
     }
 
     // ChangeListener
@@ -427,10 +427,10 @@ public class Board extends MouseAdapter implements ActionListener, ChangeListene
 
     public void disableAlgorithmSelect(boolean disableAlgoSelect) {
         this.disableAlgoSelect = disableAlgoSelect;
-        if (this.disableAlgoSelect == true) { // Algorithm select has been disabled; prevent changes to pathfinding
+        if (this.disableAlgoSelect == true) { // Algorithm select has been disabled; prevent changes to
                                               // radio buttons
             this.pathfindingAlgosComboBox.setEnabled(false);
-        } else { // Algorithm select has been enabled; allow changes to pathfinding radio buttons
+        } else { // Algorithm select has been enabled; allow changes to radio buttons
             this.pathfindingAlgosComboBox.setEnabled(true);
         }
     }
@@ -533,12 +533,12 @@ public class Board extends MouseAdapter implements ActionListener, ChangeListene
         generateNewGrid(this.sliderGridWidth.getValue()); // Generate node grid
 
         // PATHFINDING ALGORITHM TYPE DROPDOWN MENU (ComboBox)
-        // "Pathfinding Algorithms" JLabel/Header
+        // "Algorithms" JLabel/Header
         this.boardPanel.add(this.labelPathfindingAlgos);
         this.labelPathfindingAlgos.setFont(Main.FONT_HEADER);
         this.labelPathfindingAlgos.setBounds(Main.MENU_PADDING, 350, Main.MENU_WIDTH - (Main.MENU_PADDING * 2), 30);
 
-        // Pathfinding Algorithms Dropdown (ComboBox)
+        // Algorithms Dropdown (ComboBox)
         this.boardPanel.add(this.pathfindingAlgosComboBox);
         this.pathfindingAlgosComboBox.setBounds(Main.MENU_PADDING, 350 + 30, Main.MENU_WIDTH - (Main.MENU_PADDING * 2),
                 30);
@@ -682,7 +682,7 @@ class BoardPanel extends JPanel {
             for (int j = 0; j < grid[i].length; j++) {
                 g2.setColor(grid[i][j].getColor());
                 if (this.pathfindingComplete && grid[i][j].isEmpty()) { // Color shift white empty nodes after
-                                                                        // pathfinding is done
+                                                                        // is done
                     g2.setColor(new Color(this.r, this.g, this.b));
                 }
                 g2.fillRect(Main.MENU_WIDTH + (j * sideLength), i * sideLength, sideLength, sideLength); // Draw node

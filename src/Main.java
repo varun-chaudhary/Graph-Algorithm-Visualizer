@@ -88,7 +88,7 @@ public class Main {
             e.printStackTrace();
         }
 
-        frame = new JFrame("Pathfinding Visualizer");
+        frame = new JFrame("Graph Algorithm Visualizer");
         setPanel(new Board().getPanel());
         frame.setLocationRelativeTo(null);
     }

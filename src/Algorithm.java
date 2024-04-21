@@ -3,13 +3,13 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Pathfinder {
+public class Algorithm {
 
     private ArrayList<Node> path;
     private Node[][] grid;
     private Node startNode, endNode, currentNode;
 
-    public Pathfinder(Node[][] grid, Node startNode, Node endNode) {
+    public Algorithm(Node[][] grid, Node startNode, Node endNode) {
         this.grid = grid;
         this.startNode = startNode;
         this.endNode = endNode;
